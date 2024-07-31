@@ -1,0 +1,32 @@
+/* Add this in your component's CSS file */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.toolbox {
+    width: 30%;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.draggable {
+    margin: 5px;
+    padding: 10px;
+    background-color: #e7e7e7;
+    cursor: grab;
+}
+
+.form-area {
+    width: 60%;
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+
+.form-element {
+    margin: 5px 0;
+    padding: 5px;
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+}

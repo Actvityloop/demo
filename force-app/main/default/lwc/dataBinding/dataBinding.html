@@ -1,0 +1,16 @@
+<template>
+    <lightning-card>
+        <div class="slds-var-m-around_medium">
+            <p>{firstname}</p>
+            <p>{person.name}</p>
+            <p>{person.age}</p>
+            <p>{person.Address.city}</p>
+            <p></p>
+            <p>{person.Address.State}</p>
+            <p> {fruit}</p>
+        </div>
+
+        <lightning-input name="textfirstname" value={firstname} label="Enter the Name" onchange={handlechange}></lightning-input>
+        First Name : {firstname}
+    </lightning-card>
+</template>

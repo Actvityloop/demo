@@ -1,0 +1,183 @@
+<template>
+    <div class="slds-box slds-box_xx-small slds-m-bottom_small">
+        <h2 class="slds-text-heading_small">New Record</h2>
+        <template for:each={preparedFields} for:item="field">
+            <template if:true={field.isPicklist}>
+                <lightning-combobox
+                    key={field.fieldName}
+                    name={field.fieldName}
+                    label={field.label}
+                    placeholder="Select an option"
+                    options={field.picklistValues}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-combobox>
+            </template>
+            <template if:true={field.isMultiPicklist}>
+                <lightning-dual-listbox
+                    key={field.fieldName}
+                    name={field.fieldName}
+                    label={field.label}
+                    source-label="Available"
+                    selected-label="Selected"
+                    options={field.multiPicklistValues}
+                    value={field.isMultiPicklistSelected}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-dual-listbox>
+            </template>
+            <template if:true={field.isTextarea}>
+                <lightning-textarea
+                    key={field.fieldName}
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-textarea>
+            </template>
+            <template if:true={field.isCheckbox}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="checkbox"
+                    name={field.fieldName}
+                    label={field.label}
+                    checked={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isPercent}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="number"
+                    name={field.fieldName}
+                    label={field.label}
+                    step="0.01"
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isText}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="text"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isNumber}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="number"
+                    name={field.fieldName}
+                    label={field.label}
+                    step="1"
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isPhone}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="tel"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isEmail}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="email"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isDate}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="date"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isDateTime}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="datetime-local"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isCurrency}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="currency"
+                    name={field.fieldName}
+                    label={field.label}
+                    step="0.01"
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isTime}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="time"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isURL}>
+                <lightning-input
+                    key={field.fieldName}
+                    type="url"
+                    name={field.fieldName}
+                    label={field.label}
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                ></lightning-input>
+            </template>
+            <template if:true={field.isRichTextArea}>
+                <lightning-textarea
+                    key={field.fieldName}
+                    name={field.fieldName}
+                    label={field.label}
+                    placeholder="Enter rich text"
+                    value={field.value}
+                    onchange={handleFieldChange}
+                    data-field={field.fieldName}
+                    class="slds-textarea"
+                ></lightning-textarea>
+            </template>
+        </template>
+        <lightning-button
+            variant="neutral"
+            label="Remove"
+            onclick={handleRemoveRecord}
+        ></lightning-button>
+    </div>
+</template>

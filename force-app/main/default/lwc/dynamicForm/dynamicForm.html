@@ -1,0 +1,31 @@
+<template>
+    <div class="container">
+        <div class="toolbox">
+            <h3>Form Elements</h3>
+            <div class="draggable" draggable="true" data-type="text" ondragstart={handleDragStart}>Text Input</div>
+            <div class="draggable" draggable="true" data-type="textarea" ondragstart={handleDragStart}>Textarea</div>
+            <div class="draggable" draggable="true" data-type="select" ondragstart={handleDragStart}>Select</div>
+        </div>
+        <div class="form-area" ondragover={handleDragOver} ondrop={handleDrop}>
+            <h3>Your Form</h3>
+            <template for:each={formElements} for:item="element">
+                <div key={element.id} class="form-element">
+                    <template if:true={element.isTextInput}>
+                        <input type="text" placeholder="Text Input" />
+                    </template>
+                    <template if:true={element.isTextArea}>
+                        <textarea placeholder="Textarea"></textarea>
+                    </template>
+                    <template if:true={element.isSelect}>
+                        <select>
+                            <option>Option 1</option>
+                            <option>Option 2</option>
+                        </select>
+                    </template>
+                </div>
+            </template>
+        </div>
+        <button onclick={generateUrl}>Generate Form URL</button>
+        <div>{generatedUrl}</div>
+    </div>
+</template>

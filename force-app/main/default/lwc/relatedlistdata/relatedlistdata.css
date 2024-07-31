@@ -1,0 +1,44 @@
+.slds-modal__container {
+    width: 50%;
+    max-width: 40rem;
+}
+
+.slds-modal__header {
+    border-bottom: 1px solid #d8dde6;
+}
+
+.slds-modal__footer {
+    border-top: 1px solid #d8dde6;
+}
+
+.slds-box {
+    margin-bottom: 1rem;
+}
+
+.slds-text-heading_small {
+    margin-bottom: 1rem;
+}
+
+.section-container {
+    background-color: #f4f6f9; /* Light gray background for sections */
+    border: 1px solid #d8dde6; /* Border for sections */
+    border-radius: 0.5rem; /* Rounded corners */
+    padding: 1rem; /* Padding inside the section */
+}
+
+.field-container {
+    background-color: #ffffff; /* White background for form fields */
+    border: 1px solid #d8dde6; /* Border for form fields */
+    border-radius: 0.25rem; /* Slightly rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for form fields */
+    padding: 0.5rem; /* Padding inside the field container */
+    margin-bottom: 1rem; /* Space between form fields */
+}
+
+.field-container label {
+    color: #333; /* Darker text color for labels */
+}
+
+.slds-text-title_bold {
+    color: #0065ff; /* Blue color for bold text */
+}

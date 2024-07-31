@@ -1,0 +1,11 @@
+<template>
+    <lightning-card title="Dynamic Form">
+        <div class="slds-m-around_medium">
+            <lightning-input label="Field 1" value={field1} onchange={handleInputChange}></lightning-input>
+            <lightning-input label="Field 2" value={field2} onchange={handleInputChange}></lightning-input>
+            <!-- Add more fields as needed -->
+            <lightning-button label="Generate URL" onclick={generateUrl}></lightning-button>
+            <lightning-input label="Generated URL" value={generatedUrl} readonly></lightning-input>
+        </div>
+    </lightning-card>
+</template>

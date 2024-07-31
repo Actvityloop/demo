@@ -1,0 +1,166 @@
+<template>
+    <lightning-card title="Drag and Drop Form Builder">
+        <div class="slds-grid slds-wrap">
+            <!-- Draggable Elements (shown only when editing) -->
+            <template if:true={isEditing}>
+                <div class="slds-col slds-size_1-of-4">
+                    <div class="draggable" draggable="true" data-type="text" ondragstart={handleDragStart}>
+                        Text Field
+                    </div>
+                    <div class="draggable" draggable="true" data-type="textarea" ondragstart={handleDragStart}>
+                        Text Area
+                    </div>
+                    <div class="draggable" draggable="true" data-type="date" ondragstart={handleDragStart}>
+                        Date Field
+                    </div>
+                    <div class="draggable" draggable="true" data-type="longtext" ondragstart={handleDragStart}>
+                        Long Text Field
+                    </div>
+                </div>
+            </template>
+
+            <!-- Drop Area -->
+            <div class="slds-col slds-size_2-of-4 drop-area" ondrop={handleDrop} ondragover={handleDragOver}>
+                <template for:each={formFields} for:item="field">
+                    <div key={field.id} class="field" data-id={field.id} onclick={handleFieldClick}>
+                        <lightning-input label={field.label} type={field.type} value={field.value} class={field.size}></lightning-input>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Field Properties (shown only when editing) -->
+            <template if:true={showFieldProperties}>
+                <div class="slds-col slds-size_1-of-4">
+                    <lightning-input label="Label" type="text" value={selectedField.label} onchange={handleLabelChange}></lightning-input>
+                    <lightning-input label="Size" type="number" value={selectedField.size} onchange={handleSizeChange}></lightning-input>
+                </div>
+            </template>
+
+            <!-- Saved Form (shown only when form is saved and not editing) -->
+            <template if:true={formSaved}>
+                <template if:false={isEditing}>
+                    <div class="edit-button-container">
+                        <lightning-button label="Edit" onclick={handleEdit} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small">
+                            <lightning-icon icon-name="utility:edit" size="x-small" alternative-text="Edit"></lightning-icon>
+                        </lightning-button>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <!-- Buttons (shown only when editing) -->
+        <template if:true={isEditing}>
+            <div class="slds-m-top_medium">
+                <lightning-button label="Save" onclick={handleSave} class="slds-m-right_small"></lightning-button>
+                <lightning-button label="Cancel" onclick={handleCancel} class="slds-m-right_small"></lightning-button>
+                <lightning-button label="Preview" onclick={handlePreview}></lightning-button>
+            </div>
+        </template>
+
+        <!-- Modal for Preview -->
+        <template if:true={showModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Preview Form</h2>
+                    </header>
+                    <!-- Modal/Popup Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <template for:each={formFields} for:item="field">
+                            <div key={field.id} class="field">
+                                <lightning-input label={field.label} type={field.type} value={field.value} class={field.size} readonly></lightning-input>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Modal/Popup Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Back" onclick={closeModal}></lightning-button>
+                        <lightning-button variant="brand" label="Next" onclick={handleNext}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Modal for Object Selection -->
+        <template if:true={showObjectSelection}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Select Salesforce Object</h2>
+                    </header>
+                    <!-- Modal/Popup Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-combobox
+                            name="objectList"
+                            label="Choose Object"
+                            value={selectedObject}
+                            placeholder="Select Object"
+                            options={objectList}
+                            onchange={handleObjectChange}
+                        ></lightning-combobox>
+                        <template if:true={objectFields.length}>
+                            <div class="slds-m-top_medium">
+                                <h3 class="slds-text-heading_small">Available Fields</h3>
+                                <ul class="slds-list_dotted">
+                                    <template for:each={objectFields} for:item="field">
+                                        <li key={field.value} class="slds-list__item">
+                                            {field.label} ({field.type})
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Modal/Popup Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Back" onclick={handlePreview}></lightning-button>
+                        <lightning-button variant="brand" label="Next" onclick={handleObjectNext}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Form Summary -->
+        <template if:true={showFormSummary}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Header -->
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Form Summary</h2>
+                    </header>
+                    <!-- Modal/Popup Body -->
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p>Object: {selectedObject}</p>
+                        <template for:each={formFields} for:item="field">
+                            <div key={field.id} class="field">
+                                <lightning-input label={field.label} type={field.type} value={field.value} class={field.size} readonly></lightning-input>
+                            </div>
+                        </template>
+                    </div>
+                    <!-- Modal/Popup Footer -->
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Back" onclick={handleObjectChange}></lightning-button>
+                        <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,9 @@
+<template>
+    <div class="slds-col slds-size_2-of-4 drop-area" ondrop={handleDrop} ondragover={handleDragOver}>
+        <template for:each={formFields} for:item="field">
+            <div key={field.id} class="field" data-id={field.id} onclick={handleFieldClick}>
+                <lightning-input label={field.label} type={field.type} value={field.value} class={field.size} readonly={isEditing}></lightning-input>
+            </div>
+        </template>
+    </div>
+</template>

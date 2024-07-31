@@ -1,0 +1,24 @@
+<template>
+    <lightning-card title="Picklist and Multi-Select Picklist">
+        <lightning-combobox
+            name="myPicklist"
+            label="Picklist"
+            value={picklistValue}
+            placeholder="Select an Option"
+            options={picklistOptions}
+            onchange={handlePicklistChange}>
+        </lightning-combobox>
+        
+        <c-multi-select-picklist 
+            label="Multi-Select Picklist" 
+            options={multiSelectOptions} 
+            value={multiSelectValue} 
+            onchange={handleMultiSelectChange}>
+        </c-multi-select-picklist>
+        
+        <lightning-button 
+            label="Submit" 
+            onclick={handleSubmit}>
+        </lightning-button>
+    </lightning-card>
+</template>
